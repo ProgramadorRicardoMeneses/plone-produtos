@@ -1,0 +1,8 @@
+========================================================================================
+PO de instalação do Plone
+
+1) Baixe a versão desejada do Plone e depois no local de instalação a sua escolha (Estou utilizando a 5.1.6)
+2) Para descompactar o arquivo tar: 
+	tar -zxvf Plone-5.1.6-UnifiedInstaller
+3) Antes de instalar, verifique as dependências para o ambiente
+4) Execute o comando 

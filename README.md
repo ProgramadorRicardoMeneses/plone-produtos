@@ -11,5 +11,6 @@ treinamento.policy <- Pacotes para desenvolvimento de produtos
 
 treinamento.portlets
 
-treinamento.site\n
+treinamento.site
+
 treinamento.theme

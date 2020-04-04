@@ -14,7 +14,7 @@ treinamento.site
 treinamento.theme     
 
 ======================
-Termina temporariamente aqui
-Nova ajuste como branch
-Mais uma linha para que seja feito um rebase
-
+Termina temporariamente aqui  
+Nova ajuste como branch  
+Mais uma linha para que seja feito um rebase  
+Inclui esta linha diretamente no github.  

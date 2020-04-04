@@ -11,16 +11,5 @@ stdenv-plone (Pacote exemplo do ambiente para infra).
 treinamento.policy (Pacotes para desenvolvimento de produtos)  
 treinamento.portlets   
 treinamento.site     
-treinamento.theme     
+treinamento.theme   
 
-======================
-Tem uma nova linha no github  
-Termina temporariamente aqui  
-Nova ajuste como branch  
-Mais uma linha para que seja feito um rebase  
-
-======================
-Termina temporariamente aqui  
-Nova ajuste como branch  
-Mais uma linha para que seja feito um rebase  
-Inclui esta linha diretamente no github.

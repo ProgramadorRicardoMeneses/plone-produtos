@@ -11,3 +11,6 @@ treinamento.policy (Pacotes para desenvolvimento de produtos)
 treinamento.portlets   
 treinamento.site     
 treinamento.theme     
+
+======================
+Termina temporariamente aqui

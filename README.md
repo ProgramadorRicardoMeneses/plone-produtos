@@ -14,6 +14,7 @@ treinamento.site
 treinamento.theme     
 
 ======================
+Tem uma nova linha no github---- Como testar o conflito
 Termina temporariamente aqui
 Nova ajuste como branch
 Mais uma linha para que seja feito um rebase

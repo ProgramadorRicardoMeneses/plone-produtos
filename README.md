@@ -13,3 +13,5 @@ treinamento.portlets
 treinamento.site     
 treinamento.theme   
 
+
+Alteração após o STASH  

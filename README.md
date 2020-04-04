@@ -8,6 +8,8 @@ documents (Pasta com os POs e demais arquivos que possam dar suporte ao desenvol
 
 stdenv-plone (Pacote exemplo do ambiente para infra).  
 
+Inclusão para uso do STACH
+
 treinamento.policy (Pacotes para desenvolvimento de produtos)  
 treinamento.portlets   
 treinamento.site     

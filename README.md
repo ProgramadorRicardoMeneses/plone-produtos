@@ -14,10 +14,10 @@ treinamento.site
 treinamento.theme     
 
 ======================
-Tem uma nova linha no github---- Como testa
-Termina temporariamente aqui
-Nova ajuste como branch
-Mais uma linha para que seja feito um rebase
+Tem uma nova linha no github  
+Termina temporariamente aqui  
+Nova ajuste como branch  
+Mais uma linha para que seja feito um rebase  
 
 ======================
 Termina temporariamente aqui  

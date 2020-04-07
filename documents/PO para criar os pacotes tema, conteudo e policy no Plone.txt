@@ -1,0 +1,190 @@
+Dentro da pasta plone da instência do Docker executar os comandos conforme descrito a seguir.
+
+Caso tenha dúvida sobre como acessar a pasta "plone" verifique os procedimentos do arquivo "Iniciar a máquina virutal do Portal Correios no Docker.txt" 
+lá você deverá executar até a linha antes de iniciar os serviços do plone (./bin/instance fg).
+
+
+Comandos para criar os pacotes (tema, policy e conteudo).
+
+Rodei o comando do mrbob para criar a pasta tema:
+
+	pip install bobtemplates.plone==2.0
+	/plone/bin/mrbob -O correios.site.tema bobtemplates:plone_theme_package
+
+		Welcome to mr.bob interactive mode. Before we generate directory structure, some questions need to be answered.
+
+		Answer with a question mark to display help.
+		Values in square brackets at the end of the questions show the default value if there is no answer.
+
+
+		--> Theme name [Tema]: Tema do Portal Correios
+
+		--> Author's name: Correios
+
+		--> Author's email: ricardomeneses@correios.com.br
+
+		--> Author's github username:
+
+		--> Package description [An add-on for Plone]: Tema dos Correios usado no plone
+
+		--> Plone version [5.0.8]: 5.1
+
+
+Rodei o comando do mrbob para criar a pasta conteudo:
+
+	/plone/bin/mrbob -O correios.site.conteudo bobtemplates.plone:addon
+
+	Informações passadas durante a criação do pacote:
+
+		Welcome to mr.bob interactive mode. Before we generate directory structure, some questions need to be answered.
+
+		Answer with a question mark to display help.
+		Values in square brackets at the end of the questions show the default value if there is no answer.
+
+
+		--> Author's name [FakeGitUserOrEmail]: RicardoMeneses
+
+		--> Author's email [FakeGitUserOrEmail]: ricardomeneses@correios.com.br
+
+		--> Author's GitHub username:
+
+		--> Package description [An add-on for Plone]: Produto destinado a criação de portlets, views, tipos de conteúdo, scripts python, templates, arquivos de css e js que se julguem necessários
+
+		--> Do you want me to initialze a GIT repository in your new package? (y/n) [y]: n
+
+		--> Plone version [5.1]:
+
+		--> Python version for virtualenv [python2.7]:
+
+
+		git init is disabled!
+		Generated file structure at /plone/src/correios.site.conteudo
+
+
+Rodei o comando do mrbob para criar a pasta policy:
+
+	/plone/bin/mrbob -O correios.site.policy bobtemplates.plone:addon
+
+	Informações passadas durante a criação do pacote:
+
+		Welcome to mr.bob interactive mode. Before we generate directory structure, some questions need to be answered.
+
+		Answer with a question mark to display help.
+		Values in square brackets at the end of the questions show the default value if there is no answer.
+
+
+		--> Author's name [FakeGitUserOrEmail]: RicardoMeneses
+
+		--> Author's email [FakeGitUserOrEmail]: ricardomeneses@correios.com.br
+
+		--> Author's GitHub username:
+
+		--> Package description [An add-on for Plone]: correios.site.policy: Produto destinado a definição de upgrade do produto treinamento, rotina de instalação de outros produtos, criação automática e necessária de estrutura
+
+		--> Do you want me to initialze a GIT repository in your new package? (y/n) [y]: n
+
+		--> Plone version [5.1]:
+
+		--> Python version for virtualenv [python2.7]:
+
+
+		git init is disabled!
+		Generated file structure at /plone/src/correios.site.policy
+
+
+
+Após criar os pacotes (tema, conteudo e policy), executar os comandos:
+
+	Criei a pasta src dentro da pasta Plone. Usei o comando:
+
+		mkdir src
+
+	Mova as pastas criadas para a pasta src:
+		mv correios.site.tema src
+		mv correios.site.policy src
+		mv correios.site.conteudo src
+
+Instalar o nano para editar o buildout.cfg
+	apt install nano
+
+Altere o buildout que está dentro da pasta "plone"  e inserir as seguinte configuração, observe que estamos dentro da instância do Docker:
+
+	nano buildout.cfg
+
+		extensions =
+		#	 buildout.sanitycheck
+			 mr.developer
+
+		auto-checkout =
+			correios.site.tema
+			correios.site.conteudo
+			correios.site.policy
+
+	
+		eggs =
+			...
+			correios.site.tema
+			correios.site.conteudo
+			correios.site.policy
+
+
+		[sources]
+			correios.site.tema = fs correios.site.tema full-path=${buildout:directory}/src/correios.site.tema
+			correios.site.conteudo = fs correios.site.conteudo full-path=${buildout:directory}/src/correios.site.conteudo
+			correios.site.policy = fs correios.site.policy full-path=${buildout:directory}/src/correios.site.policy
+
+	A alteração do buildout deverá ser replicada para o buildout.cfg que está na máquina virtual (/home/correios/Docker_Plone_Correios/);
+
+
+Registre os produtos dentro do plone. Rodar o comando de dentro da pasta /plone:
+
+	buildout -vN
+
+	./bin/instance fg
+
+Acesse localhost:8080 acesse um site -> logue no site -> admin -> Configurações do Site -> Complementos -> Instale os 3 pacotes (tema, policy e conteudo)
+	Usuário: admin
+	Senha: admin
+
+ 
+Se os produtos estiverem listado dentro da opção "Complementos", instale os produtos tema, policy e conteudo.
+
+Após realizar a instalação dos 3 produtos, você deverá copiar os pacotes de dentro da instância do docker para a 
+máquina virutal.
+
+	
+	Selecione a opção “+” no MOBA que está ao lado da aba onde você executou o comando para acessar instâncias do Docker e criar os produtos;
+
+	Selecione a opção (no centro da tela) “Start local terminal”;
+
+	Após o item em amarelo “/home/mobaexterm” digite:
+
+		a.ssh correios@localhost
+	
+		b.tecle Enter;
+
+		c.Na linha que surgir logo abaixo digite: correios
+
+		d.tecle Enter;
+
+	Na linha que tem como início “correios@plone:~$”, digite
+
+		a.cd Docker_Plone_Correios/
+
+		b.Tecle Enter;
+
+		c.A linha será alterada para correios@plone:~/Docker_Plone_Correios$
+
+	Identifique o ID do container do Plone
+
+		Para identificar o ID do container (observar que ID container é diferente do ID da imagem -> docker images), eu usei o comando:
+			docker ps
+				O resultado deste comando deverá apresentar dos IDs, um do Plone e outro do banco de dados, pegue o do Plone.	
+
+		Execute o comando de cópia conforme a seguir:
+			docker cp <origem> <destino>
+			docker cp <id_container>:/plone/src/ /home/correios/Docker_Plone_Correios/plone_data/
+			docker cp 9995f9fec4c2:/plone/src/ /home/correios/Docker_Plone_Correios/plone_data/
+
+		
+	Crie uma nova imagem antes de finalizar as instâncias do Docker para realizar a cópia da imagem consulte o arquivo "Criar uma nova imagem do Plone no Docker.txt".

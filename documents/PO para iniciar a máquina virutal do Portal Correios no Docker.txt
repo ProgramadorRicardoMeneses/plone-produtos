@@ -1,0 +1,109 @@
+Passo para iniciar a máquina virtual:
+
+1. Execute o VirtualBox;
+2. Selecione o máquina vitual do Portal Correios;
+3. Selecione o botão com a seta verde -> Iniciar (T);
+
+
+
+Passos para usar o WinSCP:
+
+1.Após a máquina virtual ter sido iniciada;
+
+3. Execute o WinSCP insira os seguintes parâmetros:
+
+	a.Protocolo de arquivo: SFTP
+
+	b.Host: localhost
+
+	c.Porta: 22
+
+	d.Usuário: correios
+
+	e.Senha: correios
+
+4. Considero uma boa prática salvar a configuração para não ter que digitar toda vez que entrar na ferramenta;
+
+5. Selecione a opção “Login”
+
+6. Após logar, procure do lado esquerdo da tela o caminho: /home/correios/Docker_Plone_Correios/plone_data
+
+7. Dentro da pasta plone_data você irão localizar as pastas dos produtos onde iremos trabalhar;
+
+8. Faça o download das 3 pastas para o seu HD. O loca no seu HD será aquele que você usará para fazer commit do GIT;
+
+ 
+
+Iniciar as instâncias do Docker:
+
+1. Execute o Moba;
+
+2. Selecione a opção (no centro da tela) “Start local terminal”;
+
+3. Após o item em amarelo “/home/mobaexterm” digite:
+
+	a.ssh correios@localhost
+
+	b.tecle Enter;
+
+	c.Na linha que surgir logo abaixo digite: correios
+
+	d.tecle Enter;
+
+4.Na linha que tem como início “correios@plone:~$”, digite
+
+	a.cd Docker_Plone_Correios/
+
+	b.Tecle Enter;
+
+	c.A linha será alterada para correios@plone:~/Docker_Plone_Correios$
+
+	d.Digite: docker-compose up
+
+	e.Tecle Enter;
+
+	O comando “docker-compose up” irá fazer duas ações:
+
+		- Iniciar as instâncias do docker do Banco de Dados do Plone (Postgree) e iniciar a instância do docker do Plone 5.1.6, mas os serviços do Plone não serão iniciados.
+
+
+
+Iniciar os serviços do Plone na instância do Docker:
+
+1. Após iniciar as instâncias do Docker;
+
+2. Selecione a opção “+” que está ao lado da aba onde você executou o comando para subir as instâncias;
+
+3. Selecione a opção (no centro da tela) “Start local terminal”;
+
+4. Após o item em amarelo “/home/mobaexterm” digite:
+
+	a.ssh correios@localhost
+
+	b.tecle Enter;
+
+	c.Na linha que surgir logo abaixo digite: correios
+
+	d.tecle Enter;
+
+5.Na linha que tem como início “correios@plone:~$”, digite
+
+	a.cd Docker_Plone_Correios/
+
+	b.Tecle Enter;
+
+	c.A linha será alterada para correios@plone:~/Docker_Plone_Correios$
+
+	d.Digite: docker exec -it docker_plone_correios_plone_1 bash
+
+		Obs.: A linha para digitação mudou e agora contém a seguinte informação “plone@XXXXXXXXX”, isso significa que você está dentro do docker do plone. Apesar de mostra, você também está dentro da pasta plone.
+
+	e.Digite o comando: ./bin/instance fg
+
+	f.Tecle enter;
+
+	g.Os serviços do plone serão iniciados;
+
+	h.Agora chame um browser e digite: http://localhost:8080/
+
+	i.Usuário: admin e senha: admin do Plone via browser.

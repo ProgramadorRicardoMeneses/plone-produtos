@@ -1,0 +1,69 @@
+Após criar os pacotes tema, conteudo e policy na pasta /plone/src instalá-los, salvar a imagem que estiver rodando com as modificações feitas.
+	Para criar a imagem será necessário encontrar o container-id, executar o comando:
+		docker ps
+
+	Após o comando, dois IDs serão apresentados: um da instância do Plone e outra do Bando de Dados; pegue o ID do Plone.
+
+	Em uma aba do MOBA, gerar uma nova imagem da instância do docker no plone, o comando deverá ser executado dentro da pastas "correios@plone:~/Docker_Plone_Correios$"
+		docker commit container-id plone_correios:1.1
+		docker commit a377bc7dd730 plone_correios:1.1
+
+	Após executar o comando anteior e execute o comando "docker images" uma nova imagem aparecerá com o valor da tag criado,
+neste caso aparecerá 1.1 no valor da TAG, a seguir tem um exemplo resuldado dessa execução:
+
+		REPOSITORY                                    TAG                 IMAGE ID            CREATED             SIZE
+		plone_correios                                1.1                 b0cda8a9c80b        2 minutes ago       1.1GB
+		docker_plone_correios_plone                   latest              d572525b9679        16 hours ago        1.09GB
+		registry.correios.com.br:5043/python27-slim   latest              fc113e78155c        5 months ago        138MB
+		registry.correios.com.br:5043/postgres        10                  cf7301675e30        7 months ago        230MB
+
+Após criar a imagem, alterar os arquivos a seguir:
+
+dockerfile (COPY) -> tirar o comentário da linha ou digitar a linha na seção "# add the buildout.cfg and requirements.txt files to the image":
+	#COPY ./plone_data /plone/src
+
+docker-compose.yml (para rodar a imagem base) -> 
+	Comentar as linhas:
+   		build:
+      			context: ./
+      			dockerfile: Dockerfile
+
+	Retirar o comentário da linha ou digitar logo após a linhas que foram comentadas no instrução anterior:
+    		# image: plone_correios:1.1
+
+	Retirar o comentário da linha ou digitar o comando dentro de "volumes":
+      		# - ./plone_data:/plone/src
+
+	Comentar a linha
+       		- ./plone_data:/data
+
+
+buildout.cfg (Só deverá ser realizado caso você não tenha feito isto quando criou os pacotes)
+	Alterações no Buildout.cfg para reconhecer os produtos.
+	Abrir o arquivo buildout.cfg da máquina virtual (/home/correios/) e fazer as alterções a seguir:
+		extensions =
+		#	 buildout.sanitycheck
+			 mr.developer
+
+		auto-checkout +=
+			correios.site.tema
+			correios.site.conteudo
+			correios.site.policy
+
+	
+		eggs =
+			...
+			correios.site.tema
+			correios.site.conteudo
+			correios.site.policy
+
+
+		[sources]
+			correios.site.tema = fs correios.site.tema full-path=${buildout:directory}/src/correios.site.tema
+			correios.site.conteudo = fs correios.site.conteudo full-path=${buildout:directory}/src/correios.site.conteudo
+			correios.site.policy = fs correios.site.policy full-path=${buildout:directory}/src/correios.site.policy
+
+
+rodo docker-compose up 
+
+Seguir os procedimento para iniciar a máquina virtual do Portal.
